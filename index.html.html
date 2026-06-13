@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>⚽ Feliz Cumpleaños Diego ⚽</title>
+  <!-- Google Fonts import for premium sports/modern aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 50%, #1a0202 0%, #080000 60%, #000000 100%);
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      color: #ffffff;
+    }
+
+    /* --- CANVAS DE FUEGOS ARTIFICIALES --- */
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* --- CONTENIDO PRINCIPAL --- */
+    .soccer-birthday {
+      position: relative;
+      z-index: 20;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1.5rem;
+      backdrop-filter: brightness(1.05);
+    }
+
+    /* CARD PRINCIPAL (Glassmorphism con bordes neón rojo y oro) */
+    .grass-card {
+      background: rgba(15, 5, 5, 0.75);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 95%;
+      width: 520px;
+      margin: 20px auto;
+      border: 1px solid rgba(255, 30, 39, 0.3);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 
+                  0 0 30px rgba(255, 30, 39, 0.15), 
+                  inset 0 1px 2px rgba(255, 255, 255, 0.1);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      animation: cardEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    
+    .grass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 
+                  0 0 40px rgba(255, 30, 39, 0.25), 
+                  inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Insignia / Dorsal */
+    .jersey-badge {
+      background: linear-gradient(135deg, #d4af37, #ff1e27);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #000000;
+      letter-spacing: 3px;
+      box-shadow: 0 0 15px rgba(255, 30, 39, 0.4);
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Título Feliz Cumpleaños (Destaca más, más grande, animado) */
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ff1e27, #ff5e62, #ffd700, #ff1e27);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 4s linear infinite, textPulse 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 20px rgba(255, 30, 39, 0.3);
+      margin: 15px 0;
+      letter-spacing: -1px;
+      word-break: break-word;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    @keyframes shine {
+      to { background-position: 300% center; }
+    }
+    
+    @keyframes textPulse {
+      from { transform: scale(0.98); }
+      to { transform: scale(1.02); }
+    }
+
+    /* Nombre Diego */
+    .nombre-diego {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 
+                   0 0 20px rgba(255, 30, 39, 0.8),
+                   0 0 40px rgba(255, 30, 39, 0.4);
+      display: inline-block;
+      margin-bottom: 15px;
+      font-family: 'Outfit', sans-serif;
+      transform: skewX(-5deg);
+    }
+
+    /* Texto Golazo */
+    .golazo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      background: rgba(255, 30, 39, 0.15);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 4px;
+      margin: 10px 0 20px 0;
+      color: #ff4d52;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 30, 39, 0.3);
+      box-shadow: 0 0 10px rgba(255, 30, 39, 0.1);
+    }
+
+    /* Balón Animado */
+    .ball-animation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .soccer-ball {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at 35% 30%, #111, #000);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.6), 0 0 25px rgba(255, 30, 39, 0.4);
+      animation: floatBall 3s infinite ease-in-out, rotateBall 12s infinite linear;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ff1e27;
+      z-index: 2;
+    }
+    
+    .soccer-ball::before {
+      content: "⚽";
+      font-size: 3.5rem;
+      position: absolute;
+      filter: drop-shadow(0 0 10px rgba(255, 30, 39, 0.8)) sepia(100%) hue-rotate(330deg) saturate(800%);
+    }
+    
+    .ball-shadow {
+      width: 50px;
+      height: 8px;
+      background: rgba(255, 30, 39, 0.2);
+      border-radius: 50%;
+      margin: 8px auto 0 auto;
+      filter: blur(2px);
+      animation: shadowPulse 3s infinite ease-in-out;
+      z-index: 1;
+    }
+
+    @keyframes floatBall {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    @keyframes rotateBall {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes shadowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(0.7); opacity: 0.2; }
+    }
+
+    /* Marcador Digital */
+    .score-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 2, 2, 0.8);
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin: 25px 0;
+      border: 1px solid rgba(255, 30, 39, 0.3);
+      box-shadow: inset 0 0 15px rgba(255, 30, 39, 0.1);
+    }
+    
+    .team {
+      text-align: center;
+      flex: 1;
+    }
+    
+    .team span:first-child {
+      font-size: 0.75rem;
+      color: #ff888b;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .team .number {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .vs {
+      font-size: 1.1rem;
+      font-weight: 900;
+      background: #ff1e27;
+      padding: 6px 12px;
+      border-radius: 6px;
+      color: white;
+      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 0 0 15px rgba(255, 30, 39, 0.6);
+    }
+
+    /* Frase Futbolera */
+    .frase-futbolera {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 25px 0 15px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      font-weight: 500;
+      color: #eee;
+      border-left: 4px solid #ff1e27;
+      font-family: 'Space Grotesk', sans-serif;
+      text-align: left;
+      font-style: italic;
+    }
+
+    /* Separador Brillante */
+    .campo-lineas {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, #ff1e27, transparent);
+      margin: 25px auto;
+    }
+
+    /* Botón de Fuegos Artificiales */
+    .boton-fuego {
+      background: transparent;
+      border: 2px solid #ff1e27;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      margin-top: 10px;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 0 0 15px rgba(255, 30, 39, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .boton-fuego::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .boton-fuego:hover::before {
+      left: 100%;
+    }
+    
+    .boton-fuego:hover {
+      background: #ff1e27;
+      box-shadow: 0 0 25px rgba(255, 30, 39, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    .boton-fuego:active {
+      transform: translateY(1px);
+      box-shadow: 0 0 10px rgba(255, 30, 39, 0.4);
+    }
+
+    @media (max-width: 550px) {
+      h1 { font-size: 2.5rem; }
+      .nombre-diego { font-size: 3.5rem; }
+      .grass-card { padding: 1.8rem 1.2rem; width: 95%; }
+      .team .number { font-size: 1.4rem; }
+      .golazo-text { font-size: 1rem; }
+      .vs { font-size: 0.9rem; padding: 4px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Canvas para fuegos artificiales -->
+<canvas id="fireworksCanvas"></canvas>
+
+<div class="soccer-birthday">
+  <div class="grass-card">
+    <div class="jersey-badge">
+      🏆 DORSAL 7 🏆
+    </div>
+    
+    <h1>⚽ ¡FELIZ CUMPLEAÑOS! ⚽</h1>
+    <div class="nombre-diego">
+      DIEGO
+    </div>
+    
+    <div class="golazo-text">
+      ★ G⚽LAZ★ DE VIDA ★
+    </div>
+    
+    <div class="ball-animation">
+      <div class="soccer-ball" id="balonAnimado"></div>
+      <div class="ball-shadow"></div>
+    </div>
+    
+    <!-- Marcador especial partido de cumpleaños -->
+    <div class="score-area">
+      <div class="team">
+        <span>🎂 CUMPLEAÑOS</span>
+        <div class="number">DIEGO</div>
+      </div>
+      <div class="vs">🏆</div>
+      <div class="team">
+        <span>⭐ LEYENDA ⭐</span>
+        <div class="number">+1 🎂</div>
+      </div>
+    </div>
+    
+    <div class="frase-futbolera">
+      “Hoy es un dia especial, feliz cumpleaños hermano! ¡Que la pases como craCR7!”
+    </div>
+    
+    <div class="campo-lineas"></div>
+    
+    <button class="boton-fuego" id="fuegoExtraBtn">🎆 ¡DISPARAR FUEGOS EXTRA! 🎇</button>
+    <p style="margin-top: 18px; font-size: 0.8rem; color: #ff888b; text-shadow: 1px 1px 0 black;">💥 Toca en cualquier lugar de la pantalla para más fuegos artificiales 💥</p>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- FUEGOS ARTIFICIALES CON PARTÍCULAS ----------
+    const canvas = document.getElementById('fireworksCanvas');
+    let ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId = null;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+    });
+    resizeCanvas();
+
+    // Clase partícula individual (fuegos artificiales)
+    class Particle {
+      constructor(x, y, vx, vy, color, size, alpha, gravity = 0.08, friction = 0.98) {
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.color = color;
+        this.size = size;
+        this.alpha = alpha;
+        this.gravity = gravity;
+        this.friction = friction;
+        this.decay = 0.015 + Math.random() * 0.02; // fade out
+      }
+      
+      update() {
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+        return this.alpha > 0;
+      }
+      
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Crear explosión tipo fuego artificial en (x, y) - Paleta premium Rojo/Dorado/Blanco
+    function createFirework(x, y) {
+      const colors = [
+        '#FF1E27', '#E3000E', '#FF5E62', '#FFD700', '#FFA500', '#FFFCF0', '#FFFFFF'
+      ];
+      const particleCount = 80 + Math.floor(Math.random() * 60); // 80-140 partículas
+      for (let i = 0; i < particleCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 6;
+        const vx = Math.cos(angle) * speed * (Math.random() * 0.8 + 0.6);
+        const vy = Math.sin(angle) * speed * (Math.random() * 0.8 + 0.6);
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = 3 + Math.random() * 4;
+        const alpha = 0.9 + Math.random() * 0.3;
+        const gravity = 0.05 + Math.random() * 0.08;
+        particles.push(new Particle(x, y, vx, vy, color, size, alpha, gravity, 0.98));
+      }
+      // efecto adicional: pequeñas chispas extra rojas y doradas
+      for (let i = 0; i < 25; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1.5 + Math.random() * 5;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        const color = Math.random() > 0.5 ? '#FF1E27' : '#FFD700';
+        particles.push(new Particle(x, y, vx, vy, color, 2, 0.85, 0.07, 0.97));
+      }
+    }
+
+    // Animación limpiar y dibujar todas partículas
+    function animateFireworks() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+      
+      // actualizar partículas y eliminar las muertas
+      for (let i = particles.length-1; i >= 0; i--) {
+        const alive = particles[i].update();
+        if (!alive) {
+          particles.splice(i,1);
+        } else {
+          particles[i].draw(ctx);
+        }
+      }
+      
+      animationId = requestAnimationFrame(animateFireworks);
+    }
+    
+    // empezar animación
+    animateFireworks();
+    
+    // Generar fuego aleatorio en posición cielo
+    function randomFirework() {
+      const randX = width * (0.1 + Math.random() * 0.8);
+      const randY = height * (0.1 + Math.random() * 0.45);
+      createFirework(randX, randY);
+    }
+    
+    // Múltiples fuegos al inicio: ráfaga de bienvenida
+    function initialFireworksSalute() {
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          randomFirework();
+        }, i * 180);
+      }
+      setTimeout(() => {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            randomFirework();
+          }, i * 200);
+        }
+      }, 1200);
+      setTimeout(() => {
+        createFirework(width * 0.3, height * 0.25);
+        createFirework(width * 0.7, height * 0.2);
+        createFirework(width * 0.5, height * 0.3);
+      }, 1800);
+    }
+    
+    // Fuegos periódicos cada 2.3 segundos
+    let intervalFireworks = setInterval(() => {
+      randomFirework();
+      if (Math.random() > 0.6) {
+        setTimeout(() => randomFirework(), 120);
+      }
+    }, 2300);
+    
+    // ---------- INTERACCIÓN ----------
+    function handleTapOrClick(e) {
+      let clientX, clientY;
+      if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+        e.preventDefault();
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      if (clientX && clientY) {
+        createFirework(clientX, clientY);
+        setTimeout(() => {
+          createFirework(clientX + (Math.random() - 0.5) * 40, clientY + (Math.random() - 0.5) * 40);
+        }, 50);
+      } else {
+        randomFirework();
+      }
+    }
+    
+    document.body.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'fuegoExtraBtn') {
+        let rect = e.target.getBoundingClientRect();
+        let xBtn = rect.left + rect.width/2;
+        let yBtn = rect.top + rect.height/2;
+        createFirework(xBtn, yBtn);
+        for(let i=0;i<3;i++) setTimeout(()=> createFirework(xBtn+ (Math.random()*60-30), yBtn+ (Math.random()*40-20)), i*70);
+        return;
+      }
+      handleTapOrClick(e);
+    });
+    
+    document.body.addEventListener('touchstart', (e) => {
+      if (e.target && e.target.id === 'fuegoExtraBtn') {
+        let rect = e.target.getBoundingClientRect();
+        let xBtn = rect.left + rect.width/2;
+        let yBtn = rect.top + rect.height/2;
+        createFirework(xBtn, yBtn);
+        for(let i=0;i<3;i++) setTimeout(()=> createFirework(xBtn+ (Math.random()*60-30), yBtn+ (Math.random()*40-20)), i*70);
+        e.preventDefault();
+        return;
+      }
+      if (e.touches) {
+        handleTapOrClick(e);
+        e.preventDefault();
+      }
+    });
+    
+    // Botón extra fuegos artificiales múltiples
+    const extraBtn = document.getElementById('fuegoExtraBtn');
+    if (extraBtn) {
+      extraBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        for (let i = 0; i < 6; i++) {
+          setTimeout(() => {
+            const xRand = width * (0.1 + Math.random() * 0.8);
+            const yRand = height * (0.1 + Math.random() * 0.5);
+            createFirework(xRand, yRand);
+          }, i * 120);
+        }
+        setTimeout(() => {
+          createFirework(width/2, height*0.25);
+          createFirework(width/2 - 70, height*0.3);
+          createFirework(width/2 + 70, height*0.28);
+        }, 300);
+      });
+    }
+    
+    // Disparar fuegos iniciales al cargar
+    setTimeout(() => {
+      initialFireworksSalute();
+    }, 200);
+    
+    window.addEventListener('beforeunload', () => {
+      if (intervalFireworks) clearInterval(intervalFireworks);
+      if (animationId) cancelAnimationFrame(animationId);
+    });
+    
+    // Efecto al tocar el balón
+    const balon = document.getElementById('balonAnimado');
+    if (balon) {
+      balon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rectBalon = balon.getBoundingClientRect();
+        const centroX = rectBalon.left + rectBalon.width/2;
+        const centroY = rectBalon.top + rectBalon.height/2;
+        createFirework(centroX, centroY);
+        for (let i=0;i<4;i++) {
+          setTimeout(() => createFirework(centroX + (Math.random()-0.5)*50, centroY + (Math.random()-0.5)*40), i*60);
+        }
+      });
+      balon.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        const rectBalon = balon.getBoundingClientRect();
+        const centroX = rectBalon.left + rectBalon.width/2;
+        const centroY = rectBalon.top + rectBalon.height/2;
+        createFirework(centroX, centroY);
+        for (let i=0;i<4;i++) {
+          setTimeout(() => createFirework(centroX + (Math.random()-0.5)*50, centroY + (Math.random()-0.5)*40), i*60);
+        }
+        e.preventDefault();
+      });
+    }
+    
+    // Brillo sutil de texto interactivo
+    let coloresTitulo = 0;
+    setInterval(() => {
+      const titulo = document.querySelector('h1');
+      if (titulo) {
+        let hue = (coloresTitulo % 30) - 15; // Oscilar ligeramente alrededor del rojo
+        titulo.style.textShadow = `0 0 20px hsl(${hue >= 0 ? hue : 360 + hue}, 100%, 50%)`;
+        coloresTitulo = (coloresTitulo + 5) % 360;
+      }
+    }, 800);
+    
+    // Prevenir selección de texto
+    document.querySelectorAll('.grass-card, .boton-fuego').forEach(el => {
+      el.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+    
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        resizeCanvas();
+        randomFirework();
+      }, 30);
+    });
+    
+    // Cartel flotante de gol premium
+    function showCelebrationMessage() {
+      const msgDiv = document.createElement('div');
+      msgDiv.innerText = '⚽ ¡G⚽L DE CUMPLEAÑOS! ⚽';
+      msgDiv.style.position = 'fixed';
+      msgDiv.style.bottom = '25%';
+      msgDiv.style.left = '50%';
+      msgDiv.style.transform = 'translateX(-50%) scale(0.8)';
+      msgDiv.style.backgroundColor = 'rgba(15, 0, 0, 0.9)';
+      msgDiv.style.padding = '12px 24px';
+      msgDiv.style.borderRadius = '8px';
+      msgDiv.style.fontWeight = '900';
+      msgDiv.style.fontSize = '1.5rem';
+      msgDiv.style.zIndex = '200';
+      msgDiv.style.color = '#ffffff';
+      msgDiv.style.fontFamily = "'Outfit', sans-serif";
+      msgDiv.style.border = '1px solid #ff1e27';
+      msgDiv.style.boxShadow = '0 0 20px rgba(255, 30, 39, 0.6)';
+      msgDiv.style.pointerEvents = 'none';
+      msgDiv.style.whiteSpace = 'nowrap';
+      msgDiv.style.opacity = '0';
+      msgDiv.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      
+      document.body.appendChild(msgDiv);
+      
+      // Forzar reflow para que la animación funcione
+      msgDiv.offsetHeight;
+      
+      msgDiv.style.opacity = '1';
+      msgDiv.style.transform = 'translateX(-50%) scale(1)';
+      
+      setTimeout(() => {
+        msgDiv.style.opacity = '0';
+        msgDiv.style.transform = 'translateX(-50%) scale(0.8) translateY(-20px)';
+        setTimeout(() => msgDiv.remove(), 600);
+      }, 2000);
+    }
+    
+    setInterval(() => {
+      if (Math.random() > 0.4) {
+        showCelebrationMessage();
+      }
+      if (Math.random() > 0.65) {
+        randomFirework();
+      }
+    }, 8000);
+    
+    console.log('Fiesta Premium cargada para Diego!');
+  })();
+</script>
+</body>
+</html>
